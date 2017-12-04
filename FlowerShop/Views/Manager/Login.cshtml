@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<h2>Login</h2>
+<form action="/Manager/Login" class="form-horizontal" method="post" role="form" novalidate="novalidate">
+    <h4>使用管理员账号登录。</h4>
+    <hr>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="username">用户名</label>
+        <div class="col-md-10">
+            <input class="form-control" data-val="true" data-val-required="用户名 字段是必需的。" id="username" name="username" type="text" value="">
+            <span class="field-validation-valid text-danger" data-valmsg-for="username" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="password">密码</label>
+        <div class="col-md-10">
+            <input class="form-control" data-val="true" data-val-required="密码 字段是必需的。" id="password" name="password" type="password">
+            <span class="field-validation-valid text-danger" data-valmsg-for="password" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="登录" class="btn btn-default">
+        </div>
+    </div>
+
+</form>
+

@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "MyAccount";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#login").submit(function () {
+                var u = $("#Username").val();
+                var p = $("#Password").val();
+                $.ajax({
+                    type: "post", //以post方式与后台沟通
+                    url: "CheckUser", //调用action
+                    data: "username=" + username+"&password="+p, //传送的数据
+                    dataType: "html", //从action返回的值以html方式解释，或用"text"
+                    success: function (msg) { //如果调用成功，msg为后台action返回值
+                        alert(msg);
+                        return false;
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}
+
+
+
+
+    <div class="title"><span class="title_icon"><img src="~/Content/images/bullet1.gif" alt="" title=""></span>My account</div>
+
+    <div class="feat_prod_box_details">
+        <p class="details">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+        </p>
+
+        <div class="contact_form">
+            <div class="form_subtitle">用户登录</div>
+            <form name="register" action="/Flowers/MyAccount" method="post">
+                <div class="form_row">
+                    <label class="contact"><strong>Username:</strong></label>
+                    <input type="text" name="username" class="contact_input">
+                </div>
+
+
+                <div class="form_row">
+                    <label class="contact"><strong>Password:</strong></label>
+                    <input type="text" name="password" class="contact_input">
+                </div>
+
+                <div class="form_row">
+                    <div class="terms">
+                        <input type="checkbox" name="terms">
+                        Remember me
+                    </div>
+                </div>
+
+
+                <div class="form_row">
+                    <input id="login" type="submit" class="register" value="登录">
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="clear"></div>
+
