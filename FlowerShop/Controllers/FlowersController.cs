@@ -1,6 +1,7 @@
 ﻿using FlowerShop.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -82,7 +83,7 @@ namespace FlowerShop.Controllers
             {
                 Session["ID"] = u.ID;
                 Session["Username"] = u.Username;
-                return View("Index");
+                return RedirectToAction("Index");
             }
         }
 
@@ -124,6 +125,38 @@ namespace FlowerShop.Controllers
                 return HttpNotFound();
             }
             return View(f);
+        }
+
+        [UserAuthorize]
+        public ActionResult AddToCart(int id)
+        {
+            if (Session["ID"] != null)
+            {
+                int userId = Convert.ToInt32(Session["ID"].ToString());
+
+                var cfs = from v in db.CartFlowers
+                          where v.FlowerId == id && v.UserId == userId
+                          select v;
+
+                CartFlower c = cfs.FirstOrDefault();
+                if (c == null)
+                {
+                    CartFlower cf = new CartFlower();
+                    cf.FlowerId = id;
+                    cf.UserId = userId;
+                    cf.Count = 1;
+
+                    db.CartFlowers.Add(cf);
+                }
+                else
+                {
+                    c.Count += 1;
+                    db.Entry(c).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+            }
+            
+            return View("Details", id);
         }
     }
 }

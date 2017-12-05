@@ -204,6 +204,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CartFlower.cs" />
     <Compile Include="Models\Flower.cs" />
     <Compile Include="Models\FlowerDBEntities.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -215,10 +216,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\FlowerDB.mdf" />
-    <Content Include="App_Data\FlowerDB_log.ldf">
-      <DependentUpon>FlowerDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\flowershop.css" />
@@ -298,6 +295,7 @@
     <Content Include="Views\Flowers\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
   </ItemGroup>
   <ItemGroup>

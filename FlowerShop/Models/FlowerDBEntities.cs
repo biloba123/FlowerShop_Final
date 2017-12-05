@@ -11,5 +11,7 @@ namespace FlowerShop.Models
         public DbSet<User> Users { get; set; }
 
         public DbSet<Flower> Flowers { get; set; }
+
+        public DbSet<CartFlower> CartFlowers { get; set; }
     }
 }
