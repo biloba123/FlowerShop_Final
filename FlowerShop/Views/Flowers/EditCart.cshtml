@@ -1,0 +1,51 @@
+﻿@model FlowerShop.Models.CartFlower
+
+@{
+    ViewBag.Title = "EditCart";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#count").blur(function () {
+                var count=$(this).val();
+                if (count < 1 || count > 99) {
+                    $("#count_tip").html("数量需在[1, 99]之间")
+                    $(this).focus();
+                }
+            });
+
+            $("#change-count").click(function () {
+                $.ajax({
+                    type: "post", //以post方式与后台沟通
+                    url: "/Flowers/ChangeCount", //调用action
+                    data: "id=" + @Model.Id+"&count="+$("#count").val(), //传送的数据
+                    dataType: "text", //从action返回的值以html方式解释，或用"text"
+                    success: function (msg) { //如果调用成功，msg为后台action返回值
+                        window.location.href="/Flowers/Cart";
+                    }
+                });
+            });
+    });
+    </script>
+}
+
+<div class="title"><span class="title_icon"><img src="~/Content/images/bullet1.gif" alt="" title=""></span>编辑商品</div>
+
+<div class="feat_prod_box_details">
+    <img src="@Model.Img" />
+    <br />
+    <div ><strong>花名</strong> <span class="red">@Model.ProductName</span></div>
+    <div ><strong>单价</strong> <span class="red">@Model.Price $</span></div>
+    <div><strong>数量</strong> <input type="number" id="count" value="@Model.Count"/><span id="count_tip" style="color:red;"></span></div>
+    <br />
+    <div>
+        <input id="change-count" type="button" style="background-color:#990000;color:white;" value="确认" />
+        <a href="/Flowers/CartDelete/@Model.Id"><input type="button" style="background-color:#990000;color:white;" value="删除" /></a>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("返回购物车", "Cart")
+</div>

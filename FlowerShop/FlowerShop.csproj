@@ -216,6 +216,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\FlowerDB.mdf" />
+    <Content Include="App_Data\FlowerDB_log.ldf">
+      <DependentUpon>FlowerDB.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\flowershop.css" />
@@ -293,9 +297,10 @@
     <Content Include="Views\Manager\Delete.cshtml" />
     <Content Include="Views\Manager\Login.cshtml" />
     <Content Include="Views\Flowers\Details.cshtml" />
+    <Content Include="Views\Flowers\Cart.cshtml" />
+    <Content Include="Views\Flowers\EditCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
   </ItemGroup>
   <ItemGroup>

@@ -104,7 +104,14 @@ namespace FlowerShop.Controllers
         [UserAuthorize]
         public ActionResult Cart()
         {
-            return View();
+            decimal total = 0;
+            List<CartFlower> cfs = db.CartFlowers.ToList();
+            foreach (CartFlower cf in cfs)
+            {
+                total += cf.Count * cf.Price;
+            }
+            ViewBag.Total = total;
+            return View(db.CartFlowers.ToList());
         }
 
 
@@ -127,12 +134,12 @@ namespace FlowerShop.Controllers
             return View(f);
         }
 
-        [UserAuthorize]
-        public ActionResult AddToCart(int id)
+        [HttpPost]
+        public String AddToCart(int id)
         {
             if (Session["ID"] != null)
             {
-                int userId = Convert.ToInt32(Session["ID"].ToString());
+                int userId = ((int)Session["ID"]);
 
                 var cfs = from v in db.CartFlowers
                           where v.FlowerId == id && v.UserId == userId
@@ -145,7 +152,10 @@ namespace FlowerShop.Controllers
                     cf.FlowerId = id;
                     cf.UserId = userId;
                     cf.Count = 1;
-
+                    Flower f = db.Flowers.Find(id);
+                    cf.Price = f.Price;
+                    cf.Img = f.Img;
+                    cf.ProductName = f.ProductName;
                     db.CartFlowers.Add(cf);
                 }
                 else
@@ -154,9 +164,47 @@ namespace FlowerShop.Controllers
                     db.Entry(c).State = EntityState.Modified;
                 }
                 db.SaveChanges();
+                return "添加购物车成功";
             }
-            
-            return View("Details", id);
+            return "请先登录";
+        }
+
+        public ActionResult EditCart(int? id)
+        {
+            CartFlower cf = db.CartFlowers.Find(id);
+            if (cf == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cf);
+        }
+
+        [HttpPost]
+        public String ChangeCount(int id, int count)
+        {
+            CartFlower cf = db.CartFlowers.Find(id);
+            if (cf != null)
+            {
+                if (cf.Count != count)
+                {
+                    cf.Count = count;
+                    db.Entry(cf).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return "OK";
+            }
+            return "ERROR";
+        }
+
+        public ActionResult CartDelete(int? id)
+        {
+            CartFlower cf = db.CartFlowers.Find(id);
+            if (cf != null)
+            {
+                db.CartFlowers.Remove(cf);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Cart");
         }
     }
 }

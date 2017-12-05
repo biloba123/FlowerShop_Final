@@ -1,0 +1,55 @@
+﻿@model List<FlowerShop.Models.CartFlower>
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<div class="left_content">
+    <div class="title"><span class="title_icon"><img src="images/bullet1.gif" alt="" title=""></span>My cart</div>
+
+    <div class="feat_prod_box_details">
+
+        <table class="cart_table">
+            <tbody>
+                <tr class="cart_title">
+                    <td>图片</td>
+                    <td>名字</td>
+                    <td>单价</td>
+                    <td>数量</td>
+                    <td>总价</td>
+                </tr>
+
+                @foreach (FlowerShop.Models.CartFlower cf in Model)
+                {
+                    <tr>
+                        <td><a href="/Flowers/EditCart/@cf.Id"><img src="@cf.Img" alt="" title="" border="0" class="cart_thumb" width="52" height="52"></a></td>
+                        <td>@cf.ProductName</td>
+                        <td>@cf.Price$</td>
+                        <td>@cf.Count</td>
+                        <td>@(cf.Count*cf.Price)$</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td colspan="4" class="cart_total"><span class="red">总计：</span></td>
+                    <td>@ViewBag.Total$</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <a href="#" class="continue">&lt; continue</a>
+        <a href="#" class="checkout">checkout &gt;</a>
+
+
+
+
+    </div>
+
+
+
+
+
+
+    <div class="clear"></div>
+</div>
+
